@@ -20,13 +20,15 @@ lazy val commonScalacOptions = Seq(
 )
 
 lazy val hashSettings = Seq(
+  ivyConfigurations += config("compileonly").hide,
+  unmanagedClasspath in Compile ++= update.value.select(configurationFilter("compileonly")),
   scalacOptions ++= commonScalacOptions,
   organization := "com.rklaehn",
   scalaVersion := "2.11.7",
   crossScalaVersions := Seq("2.10.5", "2.11.7"),
   addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0-M5" cross CrossVersion.full),
   libraryDependencies ++= Seq(
-    "com.github.mpilquist" %% "simulacrum" % "0.5.0" % "provided",
+    "com.github.mpilquist" %% "simulacrum" % "0.5.0" % "compileonly",
     "org.spire-math" %% "cats" % "0.3.0",
     "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided",
 
